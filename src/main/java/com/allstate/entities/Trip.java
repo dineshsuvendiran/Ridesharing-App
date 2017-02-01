@@ -1,6 +1,8 @@
 package com.allstate.entities;
 
 import com.allstate.enums.Gender;
+import lombok.Data;
+
 import javax.persistence.*;
 
 import javax.persistence.GeneratedValue;
@@ -8,8 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
+
+@Entity
+@Table(name = "trips")
+@Data
 public class Trip {
 
     private int id;
@@ -20,6 +25,7 @@ public class Trip {
     private Car car;
     private Passenger passenger;
     private City city;
+    private Driver driver;
     private double distance;
     private  double cost;
     private double tipPercent;
@@ -31,15 +37,26 @@ public class Trip {
     public Trip() {
     }
 
-    public Trip(Date startTime, Date endTime, Car car, Passenger passenger, City city, double distance, double tipPercent) {
+    public Trip(Date startTime, Date endTime, Car car, Passenger passenger, City city, Driver driver, double distance, double tipPercent) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.car = car;
+        this.passenger = passenger;
+        this.city = city;
+        this.driver = driver;
+        this.distance = distance;
+        this.tipPercent = tipPercent;
+
+    }
+
+    public Trip(Car car, Passenger passenger, City city, double distance, double tipPercent) {
         this.car = car;
         this.passenger = passenger;
         this.city = city;
         this.distance = distance;
         this.tipPercent = tipPercent;
     }
+
     @Id
     @GeneratedValue
     public int getId() {
@@ -117,6 +134,16 @@ public class Trip {
 
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="driver_id")
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     public double getCost() {

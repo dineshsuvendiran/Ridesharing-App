@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "passengers")
-@Data
+//@Data
 public class Passenger {
 
     private int id;
@@ -26,6 +26,8 @@ public class Passenger {
     private Date created ;
     private Date modified ;
     private List<Trip> trips;
+    private List<City> cities;
+    private List<Driver> drivers;
 
     public Passenger() {
     }
@@ -111,5 +113,24 @@ public class Passenger {
 
     public void setTrips(List<Trip> trips) {
         this.trips = trips;
+    }
+
+    @ManyToMany(mappedBy="passengers")
+    @JsonIgnore
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+    @ManyToMany(mappedBy="passengers")
+    @JsonIgnore
+    public List<Driver> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(List<Driver> drivers) {
+        this.drivers = drivers;
     }
 }

@@ -1,9 +1,15 @@
 package com.allstate.services;
 
 import com.allstate.entities.City;
+import com.allstate.entities.Driver;
+import com.allstate.entities.Passenger;
 import com.allstate.repositories.ICityRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CityService {
@@ -25,4 +31,13 @@ public class CityService {
     public void delete(int id){
         this.cityRepository.delete(id);
     }
+
+    public List<Driver> findAllDriversInTheCity(int id){
+        return this.cityRepository.findOne(id).getDrivers().stream().distinct().collect(Collectors.toList());
+    }
+
+    public List<Passenger> findAllPassengersForCity(int id){
+        return this.cityRepository.findOne(id).getPassengers().stream().distinct().collect(Collectors.toList());
+    }
+
 }

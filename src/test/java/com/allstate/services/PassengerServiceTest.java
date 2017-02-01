@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -53,7 +54,11 @@ public class PassengerServiceTest {
         Passenger passenger = this.passengerService.findById(1);
         assertNull(passenger);
     }
+    @Transactional
+    @Test
+    public void fid_findAllDrivers() throws Exception {
+        List<Driver> drivers = this.passengerService.findAllDrivers(1);
+        assertEquals(2,drivers.size());
 
-
-
+    }
 }

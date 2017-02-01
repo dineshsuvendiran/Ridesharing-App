@@ -1,7 +1,9 @@
 package com.allstate.services;
 
+import com.allstate.entities.Car;
 import com.allstate.entities.City;
 import com.allstate.entities.Driver;
+import com.allstate.entities.Trip;
 import com.allstate.enums.Gender;
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -77,5 +80,31 @@ public class DriverServiceTest {
         Driver result =  this.driverService.update(victim);
 
         assertTrue(result.getBanned());
+    }
+
+    @Test
+    @Transactional
+    public void find_findAllcitiesWhereDriverWorks() throws Exception {
+        //List<City> cities = this.driverService.findById(1).getCities();
+        List<City> cities = this.driverService.findAllcitiesWhereDriverWorks(1);
+                assertEquals(2,cities.size());
+
+    }
+
+    @Test
+    @Transactional
+    public void find_findAllCarsDriverOwns() throws Exception {
+        List<Car> cars = this.driverService.findAllCarsDriverOwns(1);
+        assertEquals(1,cars.size());
+
+    }
+
+    @Test
+    @Transactional
+    public void find_findAllTripsAssociatedWithDriver() throws Exception {
+
+        List<Trip> trips = this.driverService.findAllTripsAssociatedWithDriver(2);
+        assertEquals(1,trips.size());
+
     }
 }

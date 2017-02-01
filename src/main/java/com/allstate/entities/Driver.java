@@ -28,6 +28,9 @@ public class Driver {
     private Date created ;
     private Date modified ;
     private List<Car> cars;
+    private  List<Trip> trips;
+    private  List<City> cities;
+    private  List<Passenger> passengers;
 
     public Driver() {
     }
@@ -135,5 +138,37 @@ public class Driver {
     public void setCars(List<Car> cars) {
         this.cars = cars;
     }
+
+    @OneToMany(mappedBy = "driver")
+    @JsonIgnore
+    public List<Trip> getTrips() {
+        return trips;
+    }
+    public void setTrips(List<Trip> trips) {
+        this.trips = trips;
+    }
+
+    @ManyToMany(mappedBy="drivers")
+    @JsonIgnore
+    public List<City> getCities() {
+        return cities;
+    }
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
+    @ManyToMany
+    @JoinTable (name = "trips",
+            joinColumns = @JoinColumn(name ="driver_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name ="passenger_id", referencedColumnName = "id"))
+    public List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<Passenger> passengers) {
+        this.passengers = passengers;
+    }
+
+
 
 }

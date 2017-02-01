@@ -126,7 +126,7 @@ public class Car {
         this.modified = modified;
     }
 
-    @OneToMany(mappedBy = "Car")
+    @OneToMany(mappedBy = "car")
     @JsonIgnore
     public List<Trip> getTrips() {
         return trips;

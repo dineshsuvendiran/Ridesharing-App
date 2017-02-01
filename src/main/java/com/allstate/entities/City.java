@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table (name = "cities")
-@Data
+
 public class City {
 
 
@@ -28,6 +28,8 @@ public class City {
     private Date created ;
     private Date modified ;
     private List<Trip> trips;
+    private List<Driver> drivers;
+    private List<Passenger> passengers;
 
     public City() {
     }
@@ -122,4 +124,28 @@ public class City {
     }
 
 
+    @ManyToMany
+    @JoinTable(name = "trips",
+            joinColumns = @JoinColumn(name = "driver_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "city_id", referencedColumnName = "id"))
+    @JsonIgnore
+    public List<Driver> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(List<Driver> drivers) {
+        this.drivers = drivers;
+    }
+
+    @ManyToMany
+    @JoinTable (name = "trips",
+        joinColumns = @JoinColumn(name ="city_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name ="passenger_id", referencedColumnName = "id"))
+    public List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<Passenger> passengers) {
+        this.passengers = passengers;
+    }
 }

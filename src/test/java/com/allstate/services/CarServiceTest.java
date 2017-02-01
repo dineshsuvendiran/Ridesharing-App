@@ -2,6 +2,7 @@ package com.allstate.services;
 
 import com.allstate.entities.Car;
 import com.allstate.entities.Driver;
+import com.allstate.entities.Trip;
 import com.allstate.enums.CarClass;
 import com.allstate.enums.Gender;
 import org.junit.After;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -54,6 +56,21 @@ public class CarServiceTest {
         carService.create(car);
         List<Car> result = carService.findByName("Nissan");
         assertEquals(1,result.size());
+
+    }
+
+    @Test
+    public void findDriverForCar() throws Exception {
+        Driver driver = this.carService.findDriver(1);
+        assertEquals("Nirmal",driver.getName());
+    }
+
+    @Test
+    @Transactional
+    public void find_findAllTripsAssociatedWithCar() throws Exception {
+
+        List<Trip> trip = this.carService.findAllTripsAssociatedWithCar(1);
+        assertEquals(2,trip.size());
 
     }
 }
